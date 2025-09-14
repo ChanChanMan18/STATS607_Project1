@@ -14,6 +14,7 @@
 #' Output: 
 #' list containing design matrix X, responses y, true coefficients beta_true,
 #' and noise variance sigma2
+
 generate_sample <- function(n = 200,
                             p = 100,
                             M = 5,
