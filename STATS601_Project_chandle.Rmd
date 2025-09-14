@@ -34,7 +34,8 @@ generate_sample <- function(n = 200,
                             C = 5,
                             distribution = c("gaussian", "t"),
                             df = 4,
-                            eta = 1) {
+                            eta = 1,
+                            ) {
 
   distribution <- match.arg(distribution)
   
