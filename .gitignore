@@ -6,3 +6,7 @@
 .Rhistory
 .Rapp.history
 .Ruserdata
+.Rprofile.local
+.Renviron
+.Renviron.local
+
