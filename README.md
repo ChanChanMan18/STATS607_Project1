@@ -2,7 +2,7 @@
 
 ## Description
 
-In this project, we reproduce the results of the paper \textit{On the cross-validation bias due to unsupervised preprocessing} by Moscovich and Rosset, 2002. In particular, the main example is reproduced, which serves to rebut a claim made in the classic textbook \textit{The Elements of Statistical Learning} by Hastie et al., 2009.
+In this project, we reproduce the results of the paper *On the cross-validation bias due to unsupervised preprocessing* by Moscovich and Rosset, 2002. In particular, the main example is reproduced, which serves to rebut a claim made in the classic textbook *The Elements of Statistical Learning* by Hastie et al., 2009.
 
 ## Table of Contents
 
