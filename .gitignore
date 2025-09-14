@@ -1,0 +1,8 @@
+# Ignore macOS hidden files
+.DS_Store
+
+# Ignore R/RStudio hidden files
+.RData
+.Rhistory
+.Rapp.history
+.Ruserdata
