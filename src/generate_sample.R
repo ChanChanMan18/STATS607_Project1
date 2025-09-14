@@ -1,4 +1,4 @@
-#' Generate data according to main example of 
+#' Generate data according to main example (Section 4) of 
 #' Moscovich and Rosset (2022)
 #' 
 #' Input:
