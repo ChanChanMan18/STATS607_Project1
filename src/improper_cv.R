@@ -1,6 +1,6 @@
-#' Perform LOO cross-validation improperly; in particular, perform
-#' preprocessing step before data splitting according to the main
-#' example of Moscovich and Rosset (2002). The covariates with the K
+#' Perform LOO cross-validation IMPROPERLY; in particular, perform
+#' preprocessing step BEFORE data splitting according to the main
+#' example of Moscovich and Rosset (2022). The covariates with the K
 #' largest empirical variance are selected for prediction prior to 
 #' data splitting.
 #' 
@@ -9,6 +9,9 @@
 #' p - Number of predictors before preprocessing performed
 #' K - Number of predictors to be selected according to largest variance
 #' sample_size - number of simulated data points
+#' 
+#' Output:
+#' MSE_Mean_Full - Average of all MSE for each fold 
 
 improper_cv <- function(data_list, p, K = 10, sample_size) {
   
@@ -22,14 +25,13 @@ improper_cv <- function(data_list, p, K = 10, sample_size) {
   
   for (i in 1:sample_size) {
     
-    training_data <- as.data.frame(matrix(selected_variables$X_K_highest_var[c(1:sample_size)[-i], ], 
-                                         ncol = K))
-    testing_data <- as.data.frame(matrix(selected_variables$X_K_highest_var[i, ], 
-                                        ncol = K))
+    training_data <- as.data.frame(matrix(
+      selected_variables$X_K_highest_var[c(1:sample_size)[-i], ], ncol = K))
+    testing_data <- as.data.frame(matrix(
+      selected_variables$X_K_highest_var[i, ], ncol = K))
     
-    output_values_train <- output_values[c(1:sample_size)[-i]]
+    output_values_train <- output_values[-i]
     output_values_test <- output_values[i]
-    
     
     all_data_training <- cbind(training_data, output_values_train)
     all_data_testing <- cbind(testing_data, output_values_test)
