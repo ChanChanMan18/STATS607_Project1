@@ -23,6 +23,7 @@ generate_sample <- function(n = 200,
                             df = 4,
                             eta = 1) {
   
+  set.seed(82803)
   distribution <- match.arg(distribution)
   
   if (distribution == "gaussian") {
@@ -49,6 +50,7 @@ generate_sample <- function(n = 200,
   output <- list(X = X, y = y, 
                  betaTrue = beta_true, 
                  sigma2 = sigma2)
+  
   
   return(output)
   
