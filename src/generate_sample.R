@@ -21,9 +21,10 @@ generate_sample <- function(n = 200,
                             C = 5,
                             distribution = c("gaussian", "t"),
                             df = 4,
-                            eta = 1) {
+                            eta = 1,
+                            seed = seed) {
   
-  set.seed(82803)
+  set.seed(seed)
   distribution <- match.arg(distribution)
   
   if (distribution == "gaussian") {
