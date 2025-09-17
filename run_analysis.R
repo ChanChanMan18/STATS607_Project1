@@ -30,7 +30,7 @@
 #'                          2fold - 2-fold cross validation
 #'
 #' master_seed - The single seed used for reproducibility.
-
+#'
 #' NOTE: Moscovich and Rosset use approximately 100,000 runs for each
 #' sample size. Especially if using LOO CV, this is not advised without access
 #' to high performance computing resources. Even 1,000 runs may take a very long
@@ -42,7 +42,7 @@ start_time <- Sys.time()
 source('src/full_cv_analysis_MR.R')
 
 ### Suggested Initial Parameters ###
-num_runs <- 100
+num_runs <- 30
 p <- 1000
 K <- 100
 M <- 10
