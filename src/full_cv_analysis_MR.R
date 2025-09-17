@@ -1,13 +1,34 @@
-#' Perform the full LOO cross-validation analysis in Moscovich and Rosset (2022)
+#' Perform the cross-validation analysis in Moscovich and Rosset (2022)
 #' 
 #' Input: 
-#' p - number of predictors
-#' M - 
-#' input_sample - sample as generated according to function generate_sample.R,
-#'                which in turn follows the sampling procedure described in the
-#'                paper
+#' p - The number of predictors in the high-dimensional regression model.
+#' K - The K covariates with the highest empirical variance
+#' M - The number of predictors multiplied by a positive constant C.
+#' C - Positive constant that multiplies first M predictors.
+#' distribution - The mean-zero distribution from which the predictors are
+#'                drawn. Inputs either "gaussian" or "t"
+#' df - If distribution is "t", the number of degrees of freedom
+#' eta - The scale of the noise error
+#' sample_size - The sample sizes that are used to assess relative values of
+#'               valuation error and risk. Should be vector object
+#' cross_val - Two options: LOO - leave one out cross validation
+#'                          2fold - 2-fold cross validation
+#'
+#' master_seed - The single seed used for reproducibility.
 #' 
+#' Output:
+#' list object containing two lists:
+#' mse_incorrect - for each sample size, the computed mse using the incorrect
+#'                 data pipeline
+#' mse_correct - for each sample size, the computed mse using the correct
+#'               data pipeline
+#' 
+#' NOTE: Moscovich and Rosset use approximately 100,000 runs for each
+#' sample size. Especially if using LOO CV, this is not advised without access
+#' to high performance computing resources. Even 1,000 runs may take a very long
+#' time if LOO CV is used.
 
+# Loading necessary scripts
 source('src/generate_sample.R')
 source('src/improper_cv_LOO.R')
 source('src/proper_cv_LOO.R')
@@ -35,6 +56,7 @@ full_cv_analysis_MR <- function(p = 1000,
                            total_runs,
                            replace = FALSE)
   
+  # Initialize vectors of incorrect/correct MSE
   mse_incorrect <- numeric(length(sample_size))
   mse_correct <- numeric(length(sample_size))
   
@@ -62,6 +84,7 @@ full_cv_analysis_MR <- function(p = 1000,
                                 eta = eta,
                                 seed = seed)
       
+      # Running 2-cross validations
       if (cross_val == '2fold') {
         
         # Computing MSE for Incorrect Pipeline, 2 fold
@@ -77,22 +100,25 @@ full_cv_analysis_MR <- function(p = 1000,
                                               K,
                                               n,
                                               seed)
+        
+        # Running LOO cross validation
       } else {
         
         # Computing MSE for Incorrect Pipeline, LOO
         mse_vec_incorrect[j] <- improper_cv_LOO(sample, 
                                             p,
                                             K,
-                                            n) # numfolds
+                                            n) 
         
         # Computing MSE for Correct Pipeline, LOO
         mse_vec_correct[j] <- proper_cv_LOO(sample,
                                         p,
                                         K,
-                                        n) # numfolds
+                                        n) 
       }
     }
     
+    # Storing mean MSEs in output vectors
     mse_incorrect[n_idx] <- mean(mse_vec_incorrect)
     mse_correct[n_idx] <- mean(mse_vec_correct)
   }

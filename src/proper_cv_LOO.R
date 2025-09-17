@@ -20,46 +20,46 @@ proper_cv_LOO <- function(data_list, p, K = 10, sample_size) {
   output_values <- data_list$y
   covariates <- data_list$X
   
-  ### Performing Cross Validation Correctly
+  # Performing Cross Validation Correctly
   mse_correct <- numeric(length = sample_size)
   
   for (i in 1:sample_size) {
     
-    ### Splitting Data into Training/Testing Sets for this fold
+    # Splitting Data into Training/Testing Sets for this fold
     train_covariates <- covariates[c(1:sample_size)[-i], ]
     train_output <- output_values[-i]
     
     test_covariates <- matrix(data = covariates[i, ], ncol = p)
     test_output <- output_values[i]
     
-    ### Selecting high variance variables (only training data!)
+    # Selecting high variance variables (only training data!)
     selected_variables <- feature_select_var(train_covariates, K)
     
-    ### Selecting variables only on the basis of training data
+    # Selecting variables only on the basis of training data
     train_covariates <- as.data.frame(matrix(
       train_covariates[, selected_variables$highest_var_ID], ncol = K))
     
     test_covariates <- as.data.frame(matrix(
       test_covariates[, selected_variables$highest_var_ID], ncol = K))
     
-    ### Creating final data frames
+    # Creating final data frames
     all_data_training <- cbind(train_covariates, train_output)
     all_data_testing <- cbind(test_covariates, test_output)
     
-    ### Creating model
+    # Creating model
     my_model <- lm(train_output ~ . + 0, 
                   data = all_data_training)
     
-    ### Making predictions
+    # Making predictions
     pred <- predict(my_model, 
                     newdata = all_data_testing)
     
-    ### Computing MSE
+    # Computing MSE
     mse_correct[i] <- mean((all_data_testing$test_output - pred)^2)
     
   }
   
-  ### Mean MSE Across Folds
+  # Mean MSE Across Folds
   MSE_Mean_Correct <- mean(mse_correct)
   
   return(MSE_Mean_Correct)

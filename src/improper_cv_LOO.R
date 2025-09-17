@@ -20,38 +20,40 @@ improper_cv_LOO <- function(data_list, p, K = 10, sample_size) {
   output_values <- data_list$y
   covariates <- data_list$X
   
-  ### Preprocessing on entire dataset
+  # Preprocessing on entire dataset
   selected_variables <- feature_select_var(covariates, K)
   
   mse_full <- numeric(length = sample_size)
   
   for (i in 1:sample_size) {
     
+    # Split into training/testing covariates
     training_data <- as.data.frame(matrix(
       selected_variables$X_K_highest_var[c(1:sample_size)[-i], ], ncol = K))
     testing_data <- as.data.frame(matrix(
       selected_variables$X_K_highest_var[i, ], ncol = K))
     
+    # Split into training/testing outputs
     output_values_train <- output_values[-i]
     output_values_test <- output_values[i]
     
     all_data_training <- cbind(training_data, output_values_train)
     all_data_testing <- cbind(testing_data, output_values_test)
     
-    ### Producing Model on training data
+    # Producing Model on training data
     my_model <- lm(output_values_train ~ . + 0, 
                   data = all_data_training)
     
-    ### Predicting on test subset
+    # Predicting on test subset
     my_predictions <- predict(my_model, 
                               newdata = all_data_testing)
     
-    ### Computing MSE for this Fold
+    # Computing MSE for this Fold
     mse_full[i] <- mean((all_data_testing$output_values_test - my_predictions)^2)
     
   }
   
-  ### Mean MSE Across Folds
+  # Mean MSE Across Folds
   MSE_Mean_Incorrect <- mean(mse_full)
   
   return(MSE_Mean_Incorrect)

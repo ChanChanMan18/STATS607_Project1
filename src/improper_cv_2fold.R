@@ -9,9 +9,10 @@
 #' p - Number of predictors before preprocessing performed
 #' K - Number of predictors to be selected according to largest variance
 #' sample_size - number of simulated data points
+#' seed - seed for reproducibility
 #' 
 #' Output:
-#' MSE_Mean_Incorrect - Average of all MSEs across folds 
+#' MSE_Mean_Incorrect - Average of all MSEs across folds for incorrect procedure
 
 source('src/feature_select_var.R')
 

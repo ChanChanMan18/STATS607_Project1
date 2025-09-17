@@ -3,7 +3,8 @@
 #' use an unsupervised variance-based feature selection on the
 #' entire dataset. Note that this is an erroneous application
 #' of feature selection used to illustrate the main idea of the
-#' paper.
+#' paper. It is also used after data splitting, which is the correct
+#' approach.
 #' 
 #' Input:
 #' X - design matrix whose covariates are those produced by 

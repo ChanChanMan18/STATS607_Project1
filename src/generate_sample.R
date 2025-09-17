@@ -38,14 +38,14 @@ generate_sample <- function(n = 200,
     X[, 1:M] <- C * X[, 1:M]
   }
   
-  ### Generate true betas from standard normal
+  # Generate true betas from standard normal
   beta_true <- rnorm(p, mean = 0, sd = 1)
   
-  ### Generating error terms 
+  # Generating error terms 
   sigma2 <- eta * ((p - M) + (C^2) * M) # Noise variance
   eps <- rnorm(n, mean = 0, sd = sqrt(sigma2)) 
   
-  ### Generating output y
+  # Generating output y
   y <- as.numeric(X %*% beta_true + eps)
   
   output <- list(X = X, y = y, 

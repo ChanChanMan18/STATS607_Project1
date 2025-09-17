@@ -9,6 +9,7 @@
 #' p - Number of predictors before preprocessing performed
 #' K - Number of predictors to be selected according to largest variance
 #' sample_size - number of simulated data points
+#' seed - seed for reproducibility
 #' 
 #' Output:
 #' MSE_Mean_Correct - Mean of MSEs after performing CV
@@ -28,9 +29,11 @@ proper_cv_2fold <- function(data_list, p, K = 10, sample_size, seed) {
   mse_fold <- numeric(2)
   
   for (f in 1:2) {
+    
     test_idx  <- folds[[f]]
     train_idx <- setdiff(seq_len(sample_size), test_idx)
     
+    # Split into training/testing data
     X_train <- X[train_idx, , drop = FALSE]
     y_train <- y[train_idx]
     X_test  <- X[test_idx,  , drop = FALSE]
