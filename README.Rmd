@@ -20,7 +20,7 @@ source('run_analysis.R')
 
 This script will populate the folder results/figures/ with your freshly made graphs!
 
-![Plot of Validation Error and Risk](results/figures/p=1000--M=10--C=10--K=100--generating distribution=gaussian--cross-val=2fold.png)
+![Plot of Validation Error and Risk](results/figures/p=1000--M=10--C=10--K=100--generating_distribution=gaussian--cross-val=2fold.png)
 
  You can adjust these parameters as desired in `run_analysis.R`.
 

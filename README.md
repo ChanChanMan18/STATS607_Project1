@@ -28,14 +28,14 @@ source('run_analysis.R')
     ## [1] "Beginning sample size: 500"
 
     ## [1] "Your new figure was saved to results/figures/"
-    ## [1] "Your analysis took 8.6 minutes to run"
+    ## [1] "Your analysis took 8.57 minutes to run"
 
 This script will populate the folder results/figures/ with your freshly
 made graphs!
 
 <figure>
 <img
-src="results/figures/p=1000--M=10--C=10--K=100--generating%20distribution=gaussian--cross-val=2fold.png"
+src="results/figures/p=1000--M=10--C=10--K=100--generating_distribution=gaussian--cross-val=2fold.png"
 alt="Plot of Validation Error and Risk" />
 <figcaption aria-hidden="true">Plot of Validation Error and
 Risk</figcaption>
