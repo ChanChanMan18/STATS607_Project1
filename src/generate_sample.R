@@ -49,7 +49,7 @@ generate_sample <- function(n = 200,
   y <- as.numeric(X %*% beta_true + eps)
   
   output <- list(X = X, y = y, 
-                 betaTrue = beta_true, 
+                 beta_true = beta_true, 
                  sigma2 = sigma2)
   
   return(output)
