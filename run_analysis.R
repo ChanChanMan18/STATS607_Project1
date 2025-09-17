@@ -29,15 +29,15 @@
 source('src/full_cv_analysis_MR.R')
 
 ### Suggested Initial Parameters ###
-num_runs <- 50
-p <- 100
-K <- 10
-M <- 5
-C <- 5
-distribution = "gaussian"
+num_runs <- 1000
+p <- 1000
+K <- 100
+M <- 10
+C <- 10
+distribution = "t"
 df <- 4
 eta <- 1
-sample_size <- seq(200, 400, 50)
+sample_size <- seq(250, 500, 50)
 
 
 ### Setting master_seed for reproducibility ###
@@ -53,6 +53,7 @@ results <- full_cv_analysis_MR(p = p,
                                df = df,
                                eta = eta,
                                sample_size = sample_size,
+                               cross_val = "2fold",
                                master_seed = master_seed)
 
 
@@ -85,7 +86,6 @@ legend('topright',
        legend = c('Valuation Error', 'Risk'), 
        col = c('blue', 'orange'), 
        lty = 1)
-
 
 dev.off()
 
