@@ -18,11 +18,11 @@ It is easy to produce an example yourself. Simply clone the Github repo into a l
 source('run_analysis.R')
 ```
 
-```{r}
-knitr::include_graphics("results/figures/p=1000--M=10--C=10--K=100--generating distribution=gaussian--cross-val=2fold.png")
-```
+This script will populate the folder results/figures/ with your freshly made graphs!
 
-This script will populate the folder results/figures/ with your freshly made graphs! You can adjust these parameters as desired in `run_analysis.R`.
+![Plot of Validation Error and Risk](results/figures/p=1000--M=10--C=10--K=100--generating distribution=gaussian--cross-val=2fold.png)
+
+ You can adjust these parameters as desired in `run_analysis.R`.
 
 ## Contact Information
 
