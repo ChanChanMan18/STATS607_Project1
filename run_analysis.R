@@ -42,7 +42,7 @@ start_time <- Sys.time()
 source('src/full_cv_analysis_MR.R')
 
 ### Suggested Initial Parameters ###
-num_runs <- 1000 
+num_runs <- 100
 p <- 1000
 K <- 100
 M <- 10
@@ -51,7 +51,7 @@ distribution = "gaussian"
 df <- 4
 eta <- 1
 sample_size <- seq(250, 500, 50)
-cross_val = "LOO"
+cross_val = "2fold"
 
 ### Setting master_seed for reproducibility ###
 master_seed <- 82803
@@ -106,7 +106,7 @@ print("Your new figure was saved to results/figures/")
 end_time <- Sys.time()
 time_taken <- end_time - start_time
 
-print(paste0("Your analysis took ", time_taken, "seconds to run"))
+print(paste0("Your analysis took ", round(time_taken, 2), " minutes to run"))
 
 ### Close the png device ###
 dev.off()
