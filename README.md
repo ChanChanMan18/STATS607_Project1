@@ -1,24 +1,46 @@
-# On the cross-validation bias due to unsupervised preprocessing - Main Code Example
 
-## Description
+# On the cross-validation bias due to unsupervised preprocessing - main code example
 
-In this project, we reproduce the results of the paper *On the cross-validation bias due to unsupervised preprocessing* by Moscovich and Rosset, 2002. In particular, the main example is reproduced, which serves to rebut a claim made in the classic textbook *The Elements of Statistical Learning* by Hastie et al., 2009.
+In this project, we reproduce the results of the paper **On the
+cross-validation bias due to unsupervised preprocessing** by Moscovich
+and Rosset, 2022. In particular, the main example is reproduced, an
+example which rebuts a claim made in the classic textbook **The Elements
+of Statistical Learning** by Hastie et al., 2009. Visit [this
+website](https://academic.oup.com/jrsssb/article/84/4/1474/7073256) for
+more details.
 
-## Table of Contents
+## Example
 
+It is easy to produce an example yourself. Simply clone the Github repo
+into a local repository, and navigate to the folder STATS607_Project1.
+Some parameters for a quick start are already provided in the script
+`run_analysis.R`. Simply run
 
+``` r
+source('run_analysis.R')
+```
 
-## Usage
+    ## [1] "Beginning sample size: 250"
+    ## [1] "Beginning sample size: 300"
+    ## [1] "Beginning sample size: 350"
+    ## [1] "Beginning sample size: 400"
+    ## [1] "Beginning sample size: 450"
+    ## [1] "Beginning sample size: 500"
 
+    ## [1] "Your new figure was saved to results/figures/"
+    ## [1] "Your analysis took 8.57 minutes to run"
 
-
-## Requirements
-
+This script will populate the folder results/figures/ with your freshly
+made graphs!
 
 ## Contact Information
 
-If you have questions about this project, you can reach out to Chandler Nielsen chandle at umich dot edu
+If you have questions about this project, you can reach out to Chandler
+Nielsen chandle at umich dot edu
 
-## Author and Purpose
+## About the Author and this project
 
-This was created by Chandler Nielsen, a PhD student in the department of Statistics at the University of Michigan. This project was completed to satisfy the requirements of Project 1 of the course STATS607 - Advanced Statistical Computing
+This was created by Chandler Nielsen, a PhD student in the department of
+Statistics at the University of Michigan. This project was completed to
+satisfy the requirements of Project 1 of the course STATS607 - Advanced
+Statistical Computing
