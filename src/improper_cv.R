@@ -11,7 +11,9 @@
 #' sample_size - number of simulated data points
 #' 
 #' Output:
-#' MSE_Mean_Full - Average of all MSE for each fold 
+#' MSE_Mean_Incorrect - Average of all MSEs across folds 
+
+source('src/feature_select_var.R')
 
 improper_cv <- function(data_list, p, K = 10, sample_size) {
   
@@ -50,7 +52,7 @@ improper_cv <- function(data_list, p, K = 10, sample_size) {
   }
   
   ### Mean MSE Across Folds
-  MSE_Mean_Full <- mean(mse_full)
+  MSE_Mean_Incorrect <- mean(mse_full)
   
-  return(MSE_Mean_Full)
+  return(MSE_Mean_Incorrect)
 }

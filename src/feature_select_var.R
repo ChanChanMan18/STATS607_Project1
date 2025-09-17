@@ -24,7 +24,7 @@ feature_select_var <- function(X, K) {
   highest_var <- order(col_vars,
                       decreasing = TRUE)[1:K]
   
-  ### Selecting top K columns with largest variance
+  # Selecting top K columns with largest variance
   X_K_highest_var <- X[, highest_var, drop=FALSE]
   
   output <- list(X_K_highest_var = X_K_highest_var,

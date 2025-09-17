@@ -33,7 +33,7 @@ generate_sample <- function(n = 200,
     X <- matrix(rt(n * p, df = df), nrow = n, ncol = p)
   }
   
-  # Scaling first M predictors for larger variance
+  # Scaling first M predictors by constant C for larger variance
   if (M > 0) {
     X[, 1:M] <- C * X[, 1:M]
   }
@@ -41,17 +41,16 @@ generate_sample <- function(n = 200,
   ### Generate true betas from standard normal
   beta_true <- rnorm(p, mean = 0, sd = 1)
   
-  ### Generating the error terms 
+  ### Generating error terms 
   sigma2 <- eta * ((p - M) + (C^2) * M) # Noise variance
   eps <- rnorm(n, mean = 0, sd = sqrt(sigma2)) 
   
-  ### Generating the output y
+  ### Generating output y
   y <- as.numeric(X %*% beta_true + eps)
   
   output <- list(X = X, y = y, 
                  betaTrue = beta_true, 
                  sigma2 = sigma2)
-  
   
   return(output)
   

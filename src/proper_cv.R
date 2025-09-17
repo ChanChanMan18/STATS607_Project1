@@ -13,6 +13,8 @@
 #' Output:
 #' MSE_Mean_Correct - Mean of MSEs after performing CV
 
+source('src/feature_select_var.R')
+
 proper_cv <- function(data_list, p, K = 10, sample_size) {
   
   output_values <- data_list$y

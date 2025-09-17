@@ -8,6 +8,10 @@
 #'                paper
 #' 
 
+source('src/generate_sample.R')
+source('src/improper_cv.r')
+source('src/proper_cv.r')
+
 full_cv_analysis_MR <- function(p = 1000,
                                 K = 100,
                                 M = 5,
@@ -35,6 +39,8 @@ full_cv_analysis_MR <- function(p = 1000,
   for (n_idx in seq_along(sample_size)) {
     
     n <- sample_size[n_idx]
+    
+    print(paste0("Beginning sample size: ", n))
     mse_vec_incorrect <- rep(0, num_runs)
     mse_vec_correct <- rep(0, num_runs)
     
