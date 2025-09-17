@@ -9,8 +9,10 @@
 #' 
 
 source('src/generate_sample.R')
-source('src/improper_cv.r')
-source('src/proper_cv.r')
+source('src/improper_cv_LOO.R')
+source('src/proper_cv_LOO.R')
+source('src/improper_cv_2fold.R')
+source('src/proper_cv_2fold.R')
 
 full_cv_analysis_MR <- function(p = 1000,
                                 K = 100,
@@ -23,6 +25,7 @@ full_cv_analysis_MR <- function(p = 1000,
                                 sample_size = seq(from = 200,
                                                   to = 600,
                                                   by = 50),
+                                cross_val = "2fold",
                                 master_seed = 82803) {
   
   # Precompute one unique seed per generate_sample call
@@ -49,7 +52,7 @@ full_cv_analysis_MR <- function(p = 1000,
       k <- k + 1L
       seed <- seed_stream[k]
       
-      ### Generate Dataset
+      # Generate Dataset
       sample <- generate_sample(n = n, 
                                 p = p, 
                                 M = M,
@@ -59,24 +62,39 @@ full_cv_analysis_MR <- function(p = 1000,
                                 eta = eta,
                                 seed = seed)
       
-      ### Computing MSE for Incorrect Pipeline
-      mse_vec_incorrect[j] <- improper_cv(sample, 
-                                          p,
-                                          K,
-                                          n) # numfolds
-      
-      ### Computing MSE for Correct Pipeline
-      mse_vec_correct[j] <- proper_cv(sample,
-                                      p,
-                                      K,
-                                      n) # numfolds
-      
-      
+      if (cross_val == '2fold') {
+        
+        # Computing MSE for Incorrect Pipeline, 2 fold
+        mse_vec_incorrect[j] <- improper_cv_2fold(sample,
+                                                  p,
+                                                  K, 
+                                                  n,
+                                                  seed)
+        
+        # Computing MSE for Correct Pipeline, 2 fold
+        mse_vec_correct[j] <- proper_cv_2fold(sample,
+                                              p,
+                                              K,
+                                              n,
+                                              seed)
+      } else {
+        
+        # Computing MSE for Incorrect Pipeline, LOO
+        mse_vec_incorrect[j] <- improper_cv_LOO(sample, 
+                                            p,
+                                            K,
+                                            n) # numfolds
+        
+        # Computing MSE for Correct Pipeline, LOO
+        mse_vec_correct[j] <- proper_cv_LOO(sample,
+                                        p,
+                                        K,
+                                        n) # numfolds
+      }
     }
     
     mse_incorrect[n_idx] <- mean(mse_vec_incorrect)
     mse_correct[n_idx] <- mean(mse_vec_correct)
-    
   }
   
   list(mse_incorrect = mse_incorrect,
