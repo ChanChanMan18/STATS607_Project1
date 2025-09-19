@@ -64,9 +64,11 @@ full_cv_analysis_MR <- function(p = 1000,
   if (length(num_runs) > 1 || 
       !is.numeric(num_runs) || 
       !(num_runs > 0) || 
-      !(num_runs %% 1 == 0)) stop("num_runs must be a positive whole number")
+      !(num_runs %% 1 == 0)) {
+    stop("num_runs must be a positive whole number")
+  }
   
-  # Checking if appropriate CV procedure provided by user
+  # Check if appropriate CV procedure provided by user
   allowed_cv <- c("2fold", "LOO")
   if (!is.character(cross_val) || 
       length(cross_val) != 1L ||
@@ -74,6 +76,22 @@ full_cv_analysis_MR <- function(p = 1000,
     stop("Distribution must be 'LOO' or '2fold'")
   }
   
+  # Check sample_size dimensions and data types
+  if ((length(sample_size) == 0) ||
+       !is.numeric(sample_size)) {
+    stop("sample_size must be numeric or vector of numerics")
+  }
+  
+  # Check sample_size for duplicates
+  if (!(length(sample_size) == length(unique(sample_size)))) {
+    stop("sample_size must not contain duplicate values")
+  }
+  
+  # Check sample_size is strictly increasing
+  if (!all(diff(sample_size) > 0)) {
+    stop("sample_size must have strictly increasing values")
+  }
+    
   # Precompute one unique seed per generate_sample call
   total_runs <- length(sample_size) * num_runs
   seed_stream <- sample.int(.Machine$integer.max,

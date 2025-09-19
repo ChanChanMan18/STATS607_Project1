@@ -2,7 +2,8 @@
 #' Moscovich and Rosset (2022)
 #' 
 #' Usage:
-#' 
+#' generate_sample(n = 200, p = 100, M = 5, C = 5,
+#'                 distribution = "gaussian", df = 4, eta = 1, seed = 10)
 #' 
 #' Input:
 #' n - number of samples
