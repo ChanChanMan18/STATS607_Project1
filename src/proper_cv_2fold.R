@@ -16,13 +16,18 @@
 
 source('src/feature_select_var.R')
 
-proper_cv_2fold <- function(data_list, p, K = 10, sample_size, seed) {
+proper_cv_2fold <- function(data_list, p, K = 10, sample_size, seed = NULL) {
   
-  y <- data_list$y
-  X <- data_list$X
+  output_values <- data_list$y
+  covariates <- data_list$X
+  
+  if (length(output_values) != nrow(covariates)) stop("Length of y must match nrow(covariates)")
+  if (is.null(sample_size)) sample_size <- nrow(covariates)
+  if (sample_size != nrow(covariates)) stop("For LOO CV, sample_size must equal nrow(covariates)")
+  if (length(p) > 1 || !is.numeric(p) || !(p > 0) || !(p %% 1 == 0)) stop("p must be a positive whole number")
   
   # Make two roughly equal folds, set seed for reproducibility
-  set.seed(seed)
+  if (!is.null(seed)) set.seed(seed)
   idx_all <- sample.int(sample_size)
   folds <- split(idx_all, rep(1:2, length.out = sample_size))  
   
@@ -34,10 +39,10 @@ proper_cv_2fold <- function(data_list, p, K = 10, sample_size, seed) {
     train_idx <- setdiff(seq_len(sample_size), test_idx)
     
     # Split into training/testing data
-    X_train <- X[train_idx, , drop = FALSE]
-    y_train <- y[train_idx]
-    X_test  <- X[test_idx,  , drop = FALSE]
-    y_test  <- y[test_idx]
+    X_train <- covariates[train_idx, , drop = FALSE]
+    y_train <- output_values[train_idx]
+    X_test  <- covariates[test_idx,  , drop = FALSE]
+    y_test  <- output_values[test_idx]
     
     # Proper preprocessing: select features using TRAINING data only
     sel <- feature_select_var(X_train, K)              

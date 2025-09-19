@@ -20,6 +20,18 @@ proper_cv_LOO <- function(data_list, p, K = 10, sample_size) {
   output_values <- data_list$y
   covariates <- data_list$X
   
+  # Checking dimensions agree
+  if (length(output_values) != nrow(covariates)) stop("Length of y must match nrow(covariates)")
+  
+  # Checking sample size
+  if (is.null(sample_size)) sample_size <- nrow(covariates)
+  
+  # Checking sample_size and nrow(covariates) agree
+  if (sample_size != nrow(covariates)) stop("For LOO CV, sample_size must equal nrow(covariates)")
+  
+  # Checking that p is supplied and is positive whole number
+  if (!is.numeric(p) || !(p > 0) || !(p %% 1 == 0)) stop("p must be a positive whole number")
+  
   # Performing Cross Validation Correctly
   mse_correct <- numeric(length = sample_size)
   

@@ -42,16 +42,16 @@ start_time <- Sys.time()
 source('src/full_cv_analysis_MR.R')
 
 ### Suggested Initial Parameters ###
-num_runs <- 30
+num_runs <- 100
 p <- 1000
 K <- 100
 M <- 10
 C <- 10
-distribution = "gaussian"
+distribution <- "gaussian"
 df <- 4
 eta <- 1
-sample_size <- seq(250, 500, 50)
-cross_val = "2fold"
+sample_size <- seq(250, 300, 50)
+cross_val <- "2fold"
 
 ### Setting master_seed for reproducibility ###
 master_seed <- 82803
@@ -64,6 +64,7 @@ results <- full_cv_analysis_MR(p = p,
                                distribution = distribution,
                                df = df,
                                eta = eta,
+                               num_runs = num_runs,
                                sample_size = sample_size,
                                cross_val = cross_val,
                                master_seed = master_seed)
@@ -104,9 +105,11 @@ legend('topright',
 
 print("Your new figure was saved to results/figures/")
 end_time <- Sys.time()
-time_taken <- end_time - start_time
+time_taken <- as.numeric(end_time - start_time, units = "secs")
+minutes <- floor(time_taken / 60)
+seconds <- time_taken %% 60
 
-print(paste0("Your analysis took ", round(time_taken, 2), " minutes to run"))
+print(paste0("Your analysis took ", round(minutes, 1), " minutes and ", round(seconds, 2), " seconds to run"))
 
 ### Close the png device ###
 dev.off()

@@ -6,11 +6,14 @@
 #' paper. It is also used after data splitting, which is the correct
 #' approach.
 #' 
+#' Usage:
+#' feature_select_var(X = design_matrix, K = 10)
+#' 
 #' Input:
 #' X - design matrix whose covariates are those produced by 
 #'     generate_sample.R
 #' K - Select the K covariates with the highest empirical
-#'     variance
+#'     variance (must be positive whole number)
 #'     
 #' Output:
 #' output - a List object containing two elements
@@ -20,6 +23,14 @@
 #'                  variance *from the original design matrix* X
 
 feature_select_var <- function(X, K) {
+  
+  if (length(K) > 1 || !is.numeric(K) || !(K == round(K)) || K <= 0) {
+    stop("K must be a positive whole number")
+  }
+  
+  if (ncol(X) < K) {
+    stop("K cannot exceed number of columns of design matrix")
+  }
   
   col_vars <- apply(X, 2, var)
   highest_var <- order(col_vars,

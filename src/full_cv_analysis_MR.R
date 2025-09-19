@@ -47,11 +47,35 @@ full_cv_analysis_MR <- function(p = 1000,
                                                   to = 600,
                                                   by = 50),
                                 cross_val = "2fold",
-                                master_seed = 82803) {
+                                master_seed = NULL) {
+  
+  # Warning thrown if seed not supplied. One is provided in this case.
+  if (is.null(master_seed)) {
+    warning("Seed should be set for reproducibility. Setting seed to 82803...")
+    Sys.sleep(1)
+    set.seed(82803)
+  } else {
+    if (length(master_seed) > 1 ||
+        !is.numeric(master_seed)) stop("master_seed must be a positive whole number")
+    set.seed(master_seed)
+  }
+  
+  # Check that num_runs is positive whole number
+  if (length(num_runs) > 1 || 
+      !is.numeric(num_runs) || 
+      !(num_runs > 0) || 
+      !(num_runs %% 1 == 0)) stop("num_runs must be a positive whole number")
+  
+  # Checking if appropriate CV procedure provided by user
+  allowed_cv <- c("2fold", "LOO")
+  if (!is.character(cross_val) || 
+      length(cross_val) != 1L ||
+      !match(cross_val, allowed_cv, nomatch = 0L)) {
+    stop("Distribution must be 'LOO' or '2fold'")
+  }
   
   # Precompute one unique seed per generate_sample call
   total_runs <- length(sample_size) * num_runs
-  set.seed(master_seed)
   seed_stream <- sample.int(.Machine$integer.max,
                            total_runs,
                            replace = FALSE)
