@@ -1,5 +1,13 @@
 library(testthat)
 
+#
+# Use: Highlight code and CMD + Return
+#
+
+# Relative paths to necessary functions
+source("src/generate_sample.R")
+source("src/feature_select_var.R")
+
 # Generating samples for testing
 sample1 <- generate_sample(200, 100, 5, 5, "gaussian", df = 4, eta = 1, seed = 82803)$X
 sample2 <- generate_sample(1000, 100, 5, 5, "gaussian", df = 4, eta = 1, seed = 82803)$X

@@ -1,7 +1,15 @@
 library(testthat)
 
+#
+# Use: highlight code and CMD + Return
+#
+
+# Loading necessary functions
+source("src/generate_sample.R")
+source("src/improper_cv_2fold.R")
+
 # Check function returns single MSE
-test_that("returns a single finite numeric MSE", {
+test_that("returns a single nonnegative numeric MSE", {
   sample <- generate_sample(n = 400, p = 20, M = 5, C = 4,
                          distribution = "gaussian", df = 4, 
                          eta = 1, seed = 82803)
@@ -39,4 +47,32 @@ test_that("input validation: y/X length mismatch errors", {
     improper_cv_2fold(bad, p = ncol(sample$X), K = 3, sample_size = nrow(sample$X), seed = 1),
     "Length of y must match nrow\\(covariates\\)"
   )
+})
+
+test_that("Test K edge cases", {
+  dat <- generate_sample(n = 200, p = 9, M = 2, C = 5,
+                         distribution = "gaussian", df = 4, eta = 1, seed = 55)
+  
+  mse1 <- improper_cv_2fold(dat, p = ncol(dat$X), K = 1,
+                          sample_size = nrow(dat$X), seed = 9)
+  expect_true(is.finite(mse1))
+  
+  mse_all <- improper_cv_2fold(dat, p = ncol(dat$X), K = ncol(dat$X),
+                             sample_size = nrow(dat$X), seed = 9)
+  expect_true(is.finite(mse_all))
+})
+
+test_that("reproducible for identical seeds, different for different seeds", {
+  dat <- generate_sample(n = 250, p = 12, M = 3, C = 6,
+                         distribution = "gaussian", df = 4, eta = 1, seed = 22)
+  a1 <- improper_cv_2fold(dat, p = ncol(dat$X), K = 3,
+                        sample_size = nrow(dat$X), seed = 82803)
+  a2 <- improper_cv_2fold(dat, p = ncol(dat$X), K = 3,
+                        sample_size = nrow(dat$X), seed = 82803)
+  expect_identical(a1, a2)
+  
+  b1 <- improper_cv_2fold(dat, p = ncol(dat$X), K = 3,
+                        sample_size = nrow(dat$X), seed = 112195)
+  # Different seeds → different fold split → very likely different MSE
+  expect_false(identical(a1, b1))
 })

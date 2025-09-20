@@ -1,5 +1,12 @@
 library(testthat)
 
+#
+# Use testthat::test_file("tests/test-generate_sample.R")
+#
+
+# Relative path to generate_sample
+source("../src/generate_sample.R")
+
 # Checking dimensions of outputs
 test_that("Dimensions of outputs incorrect",
           {
