@@ -32,9 +32,9 @@
 #' master_seed - The single seed used for reproducibility.
 #'
 #' NOTE: Moscovich and Rosset use approximately 100,000 runs for each
-#' sample size. Especially if using LOO CV, this is not advised without access
-#' to high performance computing resources. Even 1,000 runs may take a very long
-#' time if LOO CV is used.
+#' sample size (and thus error bars are excluded). Especially if using LOO CV, 
+#' this is not advised without access to high performance computing resources. 
+#' Even 1,000 runs may take a very long time if LOO CV is used.
      
 ### For testing time taken to run script ###
 start_time <- Sys.time()
@@ -42,15 +42,15 @@ start_time <- Sys.time()
 source('src/full_cv_analysis_MR.R')
 
 ### Suggested Initial Parameters ###
-num_runs <- 100
-p <- 1000
-K <- 100
-M <- 10
-C <- 10
+num_runs <- 500
+p <- 100
+K <- 10
+M <- 5
+C <- 5
 distribution <- "gaussian"
 df <- 4
 eta <- 1
-sample_size <- seq(250, 300, 50)
+sample_size <- seq(25, 60, 5)
 cross_val <- "2fold"
 
 ### Setting master_seed for reproducibility ###
@@ -69,6 +69,14 @@ results <- full_cv_analysis_MR(p = p,
                                cross_val = cross_val,
                                master_seed = master_seed)
 
+### Save Example to simulated_data/ ###
+example_dat <- generate_sample(max(sample_size), p, M, C, 
+                               distribution, df, eta, master_seed)
+folder_path <- "simulated_data/"
+file_name <- paste0("n", max(sample_size), "p", p, "K", K, "M", M, "C", C, 
+                    "dist_", distribution, "seed", master_seed, ".RData")
+full_path <- file.path(folder_path, file_name)
+save(example_dat, file = full_path)
 
 ### Plot results ###
 x <- sample_size
@@ -80,7 +88,7 @@ plot_title <- paste0('MSE versus Sample Size, p = ', p, ", M = ", M, ", C = ", C
                      ", cross-val = ", cross_val)
 
 PNG_name <- paste0('p=', p, "--M=", M, "--C=", C,
-                     "--K=", K, "--generating distribution=", distribution,
+                     "--K=", K, "--generating_distribution=", distribution,
                    "--cross-val=", cross_val)
 
 ### Open png device to save to results folder ###
@@ -109,7 +117,7 @@ time_taken <- as.numeric(end_time - start_time, units = "secs")
 minutes <- floor(time_taken / 60)
 seconds <- time_taken %% 60
 
-print(paste0("Your analysis took ", round(minutes, 1), " minutes and ", round(seconds, 2), " seconds to run"))
+print(paste0("Your analysis took ", round(minutes, 1), " minute(s) and ", round(seconds, 2), " seconds to run"))
 
 ### Close the png device ###
 dev.off()

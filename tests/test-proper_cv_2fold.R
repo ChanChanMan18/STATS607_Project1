@@ -1,15 +1,19 @@
 library(testthat)
 
+#
+# Use: Highlight code, CMD + Return
+#
+
 # Loading necessary functions
 source("src/generate_sample.R")
 source("src/feature_select_var.R")
 source("src/proper_cv_2fold.R")
 
 test_that("Return a single nonnegative numeric", {
-  dat <- generate_sample(n = 300, p = 15, M = 4, C = 5,
+  sample <- generate_sample(n = 300, p = 15, M = 4, C = 5,
                          distribution = "gaussian", df = 4, eta = 1, seed = 11)
-  mse <- proper_cv_2fold(data_list = dat, p = ncol(dat$X), K = 5,
-                         sample_size = nrow(dat$X), seed = 123)
+  mse <- proper_cv_2fold(data_list = sample, p = ncol(sample$X), K = 5,
+                         sample_size = nrow(sample$X), seed = 123)
   expect_true(is.numeric(mse))
   expect_length(mse, 1)
   expect_true(is.finite(mse))

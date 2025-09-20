@@ -39,17 +39,17 @@ test_that("First selected column of design should have highest empirical varianc
 test_that("Check input for K", {
   
   expect_error(feature_select_var(sample1, K = "2"),
-               "K must be a positive whole number", fixed = TRUE)
+               "K must be a positive whole number")
   expect_error(feature_select_var(sample2, K = 0),
-               "K must be a positive whole number", fixed = TRUE)
+               "K must be a positive whole number")
   expect_error(feature_select_var(sample3, K = -3),
-               "K must be a positive whole number", fixed = TRUE)
+               "K must be a positive whole number")
   expect_error(feature_select_var(sample4, K = 2.5),
-               "K must be a positive whole number", fixed = TRUE)
+               "K must be a positive whole number")
   expect_error(feature_select_var(sample1, K = c(1, 2)),
-               "K must be a positive whole number", fixed = TRUE)
+               "K must be a positive whole number")
   
   expect_error(feature_select_var(sample2, K = ncol(sample2) + 1),
-               "K cannot exceed number of columns of design matrix", fixed = TRUE)
+               "K cannot exceed number of columns of design matrix")
 })
 

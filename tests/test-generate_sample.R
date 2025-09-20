@@ -1,11 +1,11 @@
 library(testthat)
 
 #
-# Use testthat::test_file("tests/test-generate_sample.R")
+# Highlight code, CMD + Return
 #
 
 # Relative path to generate_sample
-source("../src/generate_sample.R")
+source("src/generate_sample.R")
 
 # Checking dimensions of outputs
 test_that("Dimensions of outputs incorrect",
@@ -35,27 +35,27 @@ test_that("Dimensions of outputs incorrect",
 test_that("Numeric and positivity check", {
   
   expect_error(generate_sample(n = "200", p = 10, M = 2, C = 2, df = 4, eta = 1, seed = 1),
-               "must be numeric", fixed = TRUE)
+               "must be numeric")
   expect_error(generate_sample(n = 200, p = 10, M = 2, C = 2, df = "4", eta = 1, seed = 1),
-               "must be numeric", fixed = TRUE)
+               "must be numeric")
   
   # Non-positive values
   expect_error(generate_sample(n = 0, p = 10, M = 2, C = 2, df = 4, eta = 1, seed = 1),
-               "must be positive", fixed = TRUE)
+               "must be positive")
   expect_error(generate_sample(n = 200, p = -1, M = 2, C = 2, df = 4, eta = 1, seed = 1),
-               "must be positive", fixed = TRUE)
+               "must be positive")
   expect_error(generate_sample(n = 200, p = 10, M = 2, C = 2, df = 4, eta = 0, seed = 1),
-               "must be positive", fixed = TRUE)
+               "must be positive")
 })
 
 # Check non-integer inputs
 test_that("Check integers for n, p, M, df", {
   expect_error(generate_sample(n = 10.5, p = 10, M = 2, C = 2, df = 4, eta = 1, seed = 1),
-               "must be whole numbers", fixed = TRUE)
+               "must be whole numbers")
   expect_error(generate_sample(n = 200, p = 10.2, M = 2, C = 2, df = 4, eta = 1, seed = 1),
-               "must be whole numbers", fixed = TRUE)
+               "must be whole numbers")
   expect_error(generate_sample(n = 200, p = 10, M = 2.7, C = 2, df = 4, eta = 1, seed = 1),
-               "must be whole numbers", fixed = TRUE)
+               "must be whole numbers")
   expect_error(generate_sample(n = 200, p = 10, M = 2, C = 2, df = 4.3, eta = 1, seed = 1),
-               "must be whole numbers", fixed = TRUE)
+               "must be whole numbers")
 })
